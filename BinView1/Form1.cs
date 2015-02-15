@@ -310,7 +310,14 @@ namespace BinView1
 
                 //DrawData();
                 //CalculateFingerPrint();
-                CalculateRangeFingerPrint(0, m_block_size);
+                if (FullViewChk.Checked)
+                {
+                    CalculateRangeFingerPrint(0, m_data.Length);
+                }
+                else
+                {
+                    CalculateRangeFingerPrint(0, m_block_size);
+                }
                 DrawFingerPrint();
                 DrawDataImage();
             }
@@ -371,26 +378,39 @@ namespace BinView1
         {
             if (m_data != null)
             {
-                if (m_previous_y != e.Y)
-                {
-                    if (pictureBox1.Height > 1)
-                    {
-                        int position = (int)(((float)e.Y / (float)pictureBox1.Height) * (float)m_data.Length);
-                        int start = position - m_block_size / 2;
-                        int end = position + m_block_size / 2;
 
-                        CalculateRangeFingerPrint(start, end);
-                        DrawFingerPrint();
-                        //DrawDataImage();
-                        m_previous_y = e.Y;
+                if (!FullViewChk.Checked)
+                {
+                    if (m_previous_y != e.Y)
+                    {
+                        if (pictureBox1.Height > 1)
+                        {
+                            int position = (int)(((float)e.Y / (float)pictureBox1.Height) * (float)m_data.Length);
+                            int start = position - m_block_size / 2;
+                            int end = position + m_block_size / 2;
+
+                            CalculateRangeFingerPrint(start, end);
+                            DrawFingerPrint();
+                            //DrawDataImage();
+                            m_previous_y = e.Y;
+                        }
                     }
+
                 }
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            
+            if (FullViewChk.Checked)
+            {
+                if (m_data != null)
+                {
+                    CalculateRangeFingerPrint(0, m_data.Length);
+                    DrawFingerPrint();
+                }
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
