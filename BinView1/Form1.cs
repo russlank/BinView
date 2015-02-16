@@ -93,7 +93,7 @@ namespace BinView1
             }
         }
 
-        
+        /*
         private void CalculateFingerPrint()
         {
             if (m_data != null)
@@ -126,6 +126,7 @@ namespace BinView1
 
             }
         }
+        */
 
         private void DrawDataImage()
         {
@@ -161,13 +162,23 @@ namespace BinView1
                         Int32 dencity = m_finger_print[x,y];
                         byte v_dencity;
 
+                        /*
                         if (dencity < m_avarage_dencity)
                         {
                             v_dencity = (byte)(((float)180.0 * (float)dencity) / (float)m_avarage_dencity);
                         } else {
                             v_dencity = (byte)(180.0 + ((float)75.0 * (float)dencity) / (float)m_max_dencity);
                         }
-                        
+                        */
+
+                        if (dencity > 0)
+                        {
+                            v_dencity = (byte)((byte)255 - (byte)(255 / dencity));
+                        }
+                        else
+                        {
+                            v_dencity = 0;
+                        }
                         
                         Color co = Color.FromArgb(255, v_dencity, v_dencity, v_dencity);
 
